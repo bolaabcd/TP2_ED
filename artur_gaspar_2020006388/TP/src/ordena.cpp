@@ -7,8 +7,15 @@
 #include <iostream>
 #include <getopt.h>
 #include <string>
-#include "memlog.h"
-#include "msgassert.h"
+#include "memlog.hpp"
+#include "msgassert.hpp"
+#include "rodada_manipulator.hpp"
+#include "ordenador.hpp"
+#include "quicksort_recursivo.hpp"
+#include "quicksort_nao_recursivo.hpp"
+#include "mergesort_recursivo.hpp"
+#include "mergesort_nao_recursivo.hpp"
+#include "heapsort_recursivo.hpp"
 
 // definicoes dos modos de ordenamento
 #define MERGE_RECURSIVO 1
@@ -75,13 +82,13 @@ void parse_args(int argc, char **argv)
             d_nome = optarg;
             if (d_nome == "1_merge")
                 desafio = MERGE_RECURSIVO;
-            else if (d_nome == "1_heap") 
+            else if (d_nome == "1_heap")
                 desafio = HEAP_RECURSIVO;
             else if (d_nome == "2_quick")
                 desafio = QUICK_NRECURSIVO;
             else if (d_nome == "2_merge")
                 desafio = MERGE_NRECURSIVO;
-            avisoAssert(desafio!=-1, "Desafio invalido passado como argumento.");
+            avisoAssert(desafio != -1, "Desafio invalido passado como argumento.");
             break;
         case 'p':
             avisoAssert(!p, "Mais de um arquivo de registro passado, o ultimo sera usado.");
@@ -130,7 +137,34 @@ int main(int argc, char **argv)
     // ativar registro de acesso
     ativaMemLog();
 
-    
+    Ordenador ord = Quicksort_Recursivo();
+
+    switch (desafio)
+    {
+    case MERGE_RECURSIVO:
+        ord = MergeSort_Recursivo();
+        break;
+    case HEAP_RECURSIVO:
+        ord = Heapsort_Recursivo();
+        break;
+    case QUICK_NRECURSIVO:
+        ord = Quicksort_Nao_Recursivo();
+        break;
+    case MERGE_NRECURSIVO:
+        ord = Mergesort_Nao_Recursivo();
+        break;
+    default:
+        break;
+    }
+
+    Rodada_Manipulator manipulator(in_nome, ord);
+
+    manipulator.gera_rodadas();
+
+    manipulator.intercala_rodadas(out_nome);
+
+    manipulator.destruir();
+
     // conclui registro de acesso
     return finalizaMemLog();
 }

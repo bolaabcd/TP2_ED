@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------
-// Arquivo      : msgassert.h
+// Arquivo      : msgassert.hpp
 // Conteudo     : definicoes para assert do tipo erro e do tipo aviso
 // Autor        : Wagner Meira Jr. (meira@dcc.ufmg.br)
 //---------------------------------------------------------------------
