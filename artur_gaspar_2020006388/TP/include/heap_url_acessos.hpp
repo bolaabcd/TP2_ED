@@ -22,6 +22,7 @@ public:
     ~Heap_URL_Acessos();
 
 private:
+    void refaz(int l, int tam);
     int capacidade;
     int quantidade;
     URL_Acessos *heap;
