@@ -13,6 +13,7 @@ class Quicksort_Recursivo : public Ordenador
 {
     public:
         Quicksort_Recursivo();
+        void ordena() override;
 };
 
 

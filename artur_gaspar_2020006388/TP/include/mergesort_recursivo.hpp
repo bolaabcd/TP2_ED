@@ -13,6 +13,7 @@ class MergeSort_Recursivo : public Ordenador
 {
     public:
         MergeSort_Recursivo();
+        void ordena() override;
 };
 
 

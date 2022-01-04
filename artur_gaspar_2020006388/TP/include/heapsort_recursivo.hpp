@@ -13,6 +13,7 @@ class Heapsort_Recursivo : public Ordenador
 {
     public:
         Heapsort_Recursivo();
+        void ordena() override;
 };
 
 
