@@ -1,9 +1,7 @@
 #---------------------------------------------------------------------
 # Arquivo	: Makefile
-# Conteúdo	: compilar o programa matop
+# Conteúdo	: compilar o programa ordena
 # Autor		: Artur Gaspar da Silva (artur.gaspar@dcc.ufmg.br)
-# Histórico	: 2021-10-27 - arquivo criado
-#		: 2021-10-27 - estrutura de diretórios
 #---------------------------------------------------------------------
 # Opções	: make all - compila tudo
 #		: make clean - remove objetos e executável
@@ -22,8 +20,8 @@ LIBS = -lm
 
 # Arquivos
 TARGET = $(BIN_FOLDER)/ordena
-HDR_FILES = $(INCLUDE_FOLDER)/memlog.h $(INCLUDE_FOLDER)/msgassert.h
-OBJ_FILES = $(OBJ_FOLDER)/ordena.o $(OBJ_FOLDER)/memlog.o
+HDR_FILES = $(INCLUDE_FOLDER)/heap_string.hpp $(INCLUDE_FOLDER)/heapsort_recursivo.hpp $(INCLUDE_FOLDER)/memlog.hpp $(INCLUDE_FOLDER)/mergesort_nao_recursivo.hpp $(INCLUDE_FOLDER)/mergesort_recursivo.hpp $(INCLUDE_FOLDER)/msgassert.hpp $(INCLUDE_FOLDER)/ordenador.hpp $(INCLUDE_FOLDER)/quicksort_nao_recursivo.hpp $(INCLUDE_FOLDER)/rodada_intercalator.hpp $(INCLUDE_FOLDER)/rodada_manipulator.hpp
+OBJ_FILES = $(OBJ_FOLDER)/ordena.o $(OBJ_FOLDER)/heap_string.o $(OBJ_FOLDER)/heapsort_recursivo.o $(OBJ_FOLDER)/memlog.o $(OBJ_FOLDER)/mergesort_nao_recursivo.o $(OBJ_FOLDER)/mergesort_recursivo.o $(OBJ_FOLDER)/ordenador.o $(OBJ_FOLDER)/quicksort_nao_recursivo.o $(OBJ_FOLDER)/rodada_intercalator.o $(OBJ_FOLDER)/rodada_manipulator.o
 
 all: $(TARGET)
 
