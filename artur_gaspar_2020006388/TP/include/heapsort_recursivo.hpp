@@ -14,6 +14,8 @@ class Heapsort_Recursivo : public Ordenador
     public:
         Heapsort_Recursivo();
         void ordena() override;
+    private:
+        void refaz(int l, int tam);
 };
 
 
