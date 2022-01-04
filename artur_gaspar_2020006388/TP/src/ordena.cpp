@@ -24,7 +24,7 @@
 #define MERGE_NRECURSIVO 4
 
 // variaveis globais para opcoes
-static int desafio;
+static int desafio, n_fitas, n_ents;
 std::string reg_nome, in_nome, out_nome;
 int regmem;
 
@@ -64,19 +64,31 @@ void parse_args(int argc, char **argv)
 
     // inicializacao variaveis globais para opcoes
     desafio = -1;
+    n_fitas = -1;
+    n_ents = -1;
     regmem = 0;
     reg_nome[0] = 0;
     in_nome[0] = 0;
     out_nome[0] = 0;
     std::string d_nome;
-    bool p = false, o = false, i = false;
+    bool p = false, o = false, i = false, f = false, n = false;
 
     // getopt - letra indica a opcao, : junto a letra indica parametro
     // no caso de escolher mais de uma operacao, vale a ultima
-    while ((c = getopt(argc, argv, "smtp:1:2:lo:h")) != EOF)
+    while ((c = getopt(argc, argv, "d:n:f:p:i:o:hl")) != EOF)
     {
         switch (c)
         {
+        case 'f':
+            avisoAssert(!f, "Mais de uma quantidade de fitas passada: o ultimo valor sera utilizado.");
+            f = true;
+            n_fitas = atoi(optarg);
+            break;
+        case 'n':
+            avisoAssert(!f, "Mais de uma quantidade de entidades passada: o ultimo valor sera utilizado.");
+            f = true;
+            n_ents = atoi(optarg);
+            break;
         case 'd':
             avisoAssert(desafio == -1, "Mais de um desafio escolhido: o ultimo sera utilizado.");
             d_nome = optarg;
@@ -88,7 +100,7 @@ void parse_args(int argc, char **argv)
                 desafio = QUICK_NRECURSIVO;
             else if (d_nome == "2_merge")
                 desafio = MERGE_NRECURSIVO;
-            avisoAssert(desafio != -1, "Desafio invalido passado como argumento.");
+            avisoAssert(desafio != -1, "Desafio invalido passado como argumento, ignorando...");
             break;
         case 'p':
             avisoAssert(!p, "Mais de um arquivo de registro passado, o ultimo sera usado.");
@@ -115,6 +127,14 @@ void parse_args(int argc, char **argv)
         }
     }
     // verificacao da consistencia das opcoes
+    erroAssert(f,
+                "ordena - eh necessario informar a quantidade de fitas.");
+    erroAssert(n, 
+                "ordena - eh necessario informar a quantidade de entidades.");
+    erroAssert(n_ents > 0, 
+                "ordena - quantidade de entidades invalida.");
+    erroAssert(n_fitas > 0, 
+                "ordena - quantidade de fitas invalida.");
     erroAssert(reg_nome.length() > 0,
                "ordena - nome de arquivo de registro de acesso tem que ser definido.");
     erroAssert(in_nome.length() > 0,
@@ -157,7 +177,7 @@ int main(int argc, char **argv)
         break;
     }
 
-    Rodada_Manipulator manipulator(in_nome, ord);
+    Rodada_Manipulator manipulator(in_nome, ord, n_fitas, n_ents);
 
     manipulator.gera_rodadas();
 

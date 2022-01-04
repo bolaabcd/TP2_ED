@@ -15,16 +15,21 @@
 class Rodada_Manipulator
 {
 public:
-    Rodada_Manipulator(std::string nome_entrada, Ordenador ord);
+    Rodada_Manipulator(
+        std::string nome_entrada, 
+        Ordenador ord, 
+        int num_rodadas, 
+        int num_entidades
+    );
     void gera_rodadas();
     void intercala_rodadas(std::string nome_saida);
     void destruir();
     ~Rodada_Manipulator();
+
 private:
     Ordenador ord;
     std::ifstream arq_entrada;
     int num_rodadas;
 };
-
 
 #endif

@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------
-// Arquivo      : heapsort_recursivi.hpp
+// Arquivo      : heapsort_recursivo.hpp
 // Conteudo     : arquivo de cabeçalho para ordenação via heapsort recursivo.
 // Autor        : Artur Gaspar da Silva
 //---------------------------------------------------------------------
