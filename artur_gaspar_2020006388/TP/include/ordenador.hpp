@@ -7,16 +7,16 @@
 #ifndef ORDENATOR_2000
 #define ORDENATOR_2000
 
-#include <string>
+#include "url_acessos.hpp"
 
 class Ordenador
 {
 public:
    Ordenador();
-   void set_fonte(std::string* lista_urls, int numero_urls); 
+   void set_fonte(URL_Acessos* lista_urls, int numero_urls); 
    virtual void ordena();
 protected:
-    std::string* lista_urls;
+    URL_Acessos* lista_urls;
     int numero_urls;
 };
 

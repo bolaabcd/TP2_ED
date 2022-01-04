@@ -7,7 +7,6 @@
 #ifndef HEAPSORT_RECURSIVO_ORDENATOR
 #define HEAPSORT_RECURSIVO_ORDENATOR
 
-#include <string>
 #include "ordenador.hpp"
 
 class Heapsort_Recursivo : public Ordenador

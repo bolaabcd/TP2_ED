@@ -7,7 +7,6 @@
 #ifndef MERGESORT_RECURSIVO_ORDENATOR
 #define MERGESORT_RECURSIVO_ORDENATOR
 
-#include <string>
 #include "ordenador.hpp"
 
 class Mergesort_Nao_Recursivo : public Ordenador

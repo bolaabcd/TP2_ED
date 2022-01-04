@@ -4,26 +4,25 @@
 // Autor        : Artur Gaspar da Silva
 //---------------------------------------------------------------------
 
-#ifndef HEAP_STRING
-#define HEAP_STRING
+#ifndef HEAP_URL_ACESSOS
+#define HEAP_URL_ACESSOS
 
-#include <string>
+#include "url_acessos.hpp"
 #include <fstream>
-#include "heap_string.hpp"
 
-class Heap_String
+class Heap_URL_Acessos
 {
 public:
-    Heap_String(int num_elementos);
-    std::string adicionar(std::string string);
-    std::string pega_primeiro();
+    Heap_URL_Acessos(int num_elementos);
+    URL_Acessos adicionar(URL_Acessos url_acessos);
+    URL_Acessos pega_primeiro();
     void tira_primeiro();
-    ~Heap_String();
+    ~Heap_URL_Acessos();
 
 private:
     int capacidade;
     int quantidade;
-    std::string *heap;
+    URL_Acessos *heap;
 };
 
 #endif

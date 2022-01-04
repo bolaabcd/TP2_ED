@@ -7,19 +7,19 @@
 #ifndef RODADA_INTERCALATOR
 #define RODADA_INTERCALATOR
 
-#include <string>
 #include <fstream>
-#include "heap_string.hpp"
+#include "heap_url_acessos.hpp"
 
 class Rodada_Intercalator
 {
 public:
     Rodada_Intercalator(int num_rodadas);
     void intercalar();
+    void destruir();
     ~Rodada_Intercalator();
 private:
     std::ofstream* fitas;
-    Heap_String heap_string;
+    Heap_URL_Acessos heap_url_acessos;
 };
 
 
