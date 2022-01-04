@@ -9,11 +9,13 @@
 
 #include "ordenador.hpp"
 
-class MergeSort_Recursivo : public Ordenador
+class Mergesort_Recursivo : public Ordenador
 {
     public:
-        MergeSort_Recursivo();
+        Mergesort_Recursivo();
         void ordena() override;
+    private:
+        void mergesort_interno(int l, int r);
 };
 
 
