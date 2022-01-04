@@ -17,13 +17,12 @@ bool URL_Acessos::operator<(URL_Acessos outro)
         return this->quantidade < outro.quantidade;
 }
 
-std::istream& operator>>(std::istream &in, URL_Acessos &url_acessos){
-    in >> url_acessos.url >> url_acessos.quantidade;
-    return in;
+std::istream &operator>>(std::istream &in, URL_Acessos &url_acessos)
+{
+    return in >> url_acessos.url >> url_acessos.quantidade;
 }
 
-std::ostream& operator<<(std::ostream &out, URL_Acessos &url_acessos)
+std::ostream &operator<<(std::ostream &out, URL_Acessos &url_acessos)
 {
-    out << url_acessos.url << " " << url_acessos.quantidade << std::endl;
-    return out;
+    return out << url_acessos.url << " " << url_acessos.quantidade << std::endl;
 }

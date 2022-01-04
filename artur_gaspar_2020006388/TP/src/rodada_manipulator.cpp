@@ -11,7 +11,7 @@ Rodada_Manipulator::Rodada_Manipulator(
     std::string nome_entrada,
     Ordenador ord,
     int num_rodadas,
-    int num_entidades) : ord(ord),
+    int n_mem_prim) : ord(ord),
                          num_rodadas(num_rodadas),
                          n_mem_prim(n_mem_prim)
 {
@@ -22,7 +22,7 @@ void Rodada_Manipulator::gera_rodadas()
 {
     for (int k = 0; k < this->num_rodadas; k++)
     {
-        URL_Acessos *url_acessos = (URL_Acessos *)malloc(this->n_mem_prim * sizeof(URL_Acessos));
+        URL_Acessos *url_acessos = new URL_Acessos[this->n_mem_prim];
         int i;
         for (i = 0; i < this->n_mem_prim && !this->arq_entrada.eof(); i++)
         {
@@ -40,7 +40,7 @@ void Rodada_Manipulator::gera_rodadas()
             arq_saida << url_acessos[j] << std::endl;
         }
         arq_saida.close();
-        free(url_acessos);
+        delete[] url_acessos;
     }
 }
 

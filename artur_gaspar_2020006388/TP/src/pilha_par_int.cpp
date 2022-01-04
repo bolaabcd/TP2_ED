@@ -11,8 +11,8 @@ Pilha_Par_Int::Pilha_Par_Int(int capacidade_inicial)
 {
     this->capacidade = capacidade_inicial;
     this->quantidade = 0;
-    this->primeiro = (int *)malloc(capacidade_inicial * sizeof(int));
-    this->segundo = (int *)malloc(capacidade_inicial * sizeof(int));
+    this->primeiro = new int[capacidade_inicial];
+    this->segundo = new int[capacidade_inicial];
 }
 
 void Pilha_Par_Int::adiciona(int a, int b)
@@ -49,8 +49,8 @@ bool Pilha_Par_Int::vazia() {
 void Pilha_Par_Int::destruir(){
     if(this->capacidade == 0)
         return;
-    free(this->primeiro);
-    free(this->segundo);
+    delete[] this->primeiro;
+    delete[] this->segundo;
     this->quantidade = 0;
     this->capacidade = 0;
 }

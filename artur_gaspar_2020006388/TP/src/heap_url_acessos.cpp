@@ -12,17 +12,17 @@ Heap_URL_Acessos::Heap_URL_Acessos(int num_elementos)
 {
     this->capacidade = num_elementos;
     this->quantidade = 0;
-    this->heap = (URL_Acessos *)malloc((num_elementos + 1) * sizeof(URL_Acessos *));
-    this->rodadas = (int *)malloc((num_elementos + 1) * sizeof(int *));
+    this->heap = new URL_Acessos[num_elementos + 1];
+    this->rodadas = new int[num_elementos + 1];
 }
 
 void Heap_URL_Acessos::adicionar(URL_Acessos url_acessos, int rodada)
 {
-    this->heap[++quantidade] = url_acessos;
-    this->rodadas[quantidade] = rodada;
+    this->rodadas[++this->quantidade] = rodada;
+    this->heap[this->quantidade] = url_acessos;
 
-    for (int i = quantidade / 2; i > 0; i /= 2)
-        refaz(i, quantidade);
+    for (int i = this->quantidade / 2; i > 0; i /= 2)
+        refaz(i, this->quantidade);
 }
 
 URL_Acessos Heap_URL_Acessos::url_acessos_primeiro()
@@ -37,9 +37,9 @@ int Heap_URL_Acessos::rodada_primeiro()
 
 void Heap_URL_Acessos::tira_primeiro()
 {
-    heap[1] = heap[quantidade];
-    rodadas[1] = rodadas[quantidade--];
-    refaz(1, quantidade);
+    heap[1] = heap[this->quantidade];
+    rodadas[1] = rodadas[this->quantidade--];
+    refaz(1, this->quantidade);
 }
 
 bool Heap_URL_Acessos::vazio()
@@ -53,8 +53,8 @@ Heap_URL_Acessos::~Heap_URL_Acessos()
         return;
     this->capacidade = 0;
     this->quantidade = 0;
-    free(this->heap);
-    free(this->rodadas);
+    delete[] this->heap;
+    delete[] this->rodadas;
 }
 
 void Heap_URL_Acessos::refaz(int l, int tam) {

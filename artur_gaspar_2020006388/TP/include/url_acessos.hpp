@@ -18,8 +18,8 @@ public:
     std::string url;
     int quantidade;
     bool operator<(URL_Acessos outro);
-    friend std::istream& operator>>(std::istream &in, URL_Acessos &url_acessos);
-    friend std::ostream& operator<<(std::ostream &out, URL_Acessos &url_acessos);
+    friend std::istream &operator>>(std::istream &in, URL_Acessos &url_acessos);
+    friend std::ostream &operator<<(std::ostream &out, URL_Acessos &url_acessos);
 };
 
 #endif

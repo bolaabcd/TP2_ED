@@ -8,7 +8,7 @@
 
 Rodada_Intercalator::Rodada_Intercalator(int n_rodadas, std::string nome_saida) : nome_saida(nome_saida), heap_url_acessos(n_rodadas), num_rodadas(n_rodadas)
 {
-    this->fitas = (std::ifstream *)malloc(n_rodadas * sizeof(URL_Acessos));
+    this->fitas = new std::ifstream[n_rodadas];
 
     for (int i = 0; i < n_rodadas; i++)
     {
@@ -45,11 +45,14 @@ void Rodada_Intercalator::intercalar()
 
 void Rodada_Intercalator::destruir()
 {
+    if(this->fitas == nullptr)
+        return;
     for (int i = 0; i < this->num_rodadas; i++)
     {
         this->fitas[i].close();
     }
-    free(this->fitas);
+    delete[] this->fitas;
+    this->fitas = nullptr;
 }
 
 Rodada_Intercalator::~Rodada_Intercalator()

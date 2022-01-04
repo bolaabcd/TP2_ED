@@ -12,10 +12,10 @@ Fila_Par_Int::Fila_Par_Int(int capacidade)
 {
     this->capacidade = ++capacidade;
     this->quantidade = 0;
-    this->primeiro = (int *)malloc(capacidade * sizeof(int));
+    this->primeiro = new int[capacidade];
     this->pos_init = 0;
     this->pos_final = 1;
-    this->segundo = (int *)malloc(capacidade * sizeof(int));
+    this->segundo = new int[capacidade];
 }
 
 void Fila_Par_Int::adiciona(int a, int b)
@@ -56,8 +56,8 @@ void Fila_Par_Int::destruir()
 {
     if (this->capacidade == 0)
         return;
-    free(this->primeiro);
-    free(this->segundo);
+    delete[] this->primeiro;
+    delete[] this->segundo;
     this->quantidade = 0;
     this->capacidade = 0;
     this->pos_init = 0;
