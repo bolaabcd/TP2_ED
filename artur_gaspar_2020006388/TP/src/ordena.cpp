@@ -34,14 +34,14 @@ void uso()
 // Saida: impressao das opcoes de linha de comando
 {
     fprintf(stderr, "ordena\n");
-    fprintf(stderr, "\t-h \t\t(obter ajuda) \n");
-    fprintf(stderr, "\t-i <arq>\t\t(arquivo de entrada) \n");
-    fprintf(stderr, "\t-o <arq>\t\t(arquivo de saida)) \n");
-    fprintf(stderr, "\t-n <num>\t\t(numero de entidades na memoria primaria)\n");
-    fprintf(stderr, "\t-f <num>\t\t(numero de fitas)\n");
-    fprintf(stderr, "\t-d \t\t[1_merge, 1_heap, 2_quick, 2_merge]\t(desafio a executar)\n");
-    fprintf(stderr, "\t-p \t\t<arq>\t(arquivo de registro de desempenho)\n");
-    fprintf(stderr, "\t-l \t\t(registrar padrao de acesso e localidade)\n");
+    fprintf(stderr, "\t-h      \t(obter ajuda) \n");
+    fprintf(stderr, "\t-i <arq>\t(arquivo de entrada) \n");
+    fprintf(stderr, "\t-o <arq>\t(arquivo de saida)) \n");
+    fprintf(stderr, "\t-n <num>\t(numero de entidades na memoria primaria)\n");
+    fprintf(stderr, "\t-f <num>\t(numero de fitas)\n");
+    fprintf(stderr, "\t-d      \t[1_merge, 1_heap, 2_quick, 2_merge]\t(desafio a executar)\n");
+    fprintf(stderr, "\t-p      \t<arq>\t(arquivo de registro de desempenho)\n");
+    fprintf(stderr, "\t-l      \t(registrar padrao de acesso e localidade)\n");
 }
 
 void parse_args(int argc, char **argv)
@@ -85,8 +85,8 @@ void parse_args(int argc, char **argv)
             n_fitas = atoi(optarg);
             break;
         case 'n':
-            avisoAssert(!f, "Mais de uma quantidade de entidades passada: o ultimo valor sera utilizado.");
-            f = true;
+            avisoAssert(!n, "Mais de uma quantidade de entidades passada: o ultimo valor sera utilizado.");
+            n = true;
             n_mem_prim = atoi(optarg);
             break;
         case 'd':
@@ -130,9 +130,9 @@ void parse_args(int argc, char **argv)
     erroAssert(f,
                 "ordena - eh necessario informar a quantidade de fitas.");
     erroAssert(n, 
-                "ordena - eh necessario informar a quantidade de entidades.");
+                "ordena - eh necessario informar a quantidade de entidades por fita.");
     erroAssert(n_mem_prim > 0, 
-                "ordena - quantidade de entidades invalida.");
+                "ordena - quantidade de entidades por fita invalida.");
     erroAssert(n_fitas > 0, 
                 "ordena - quantidade de fitas invalida.");
     erroAssert(reg_nome.length() > 0,
@@ -162,7 +162,7 @@ int main(int argc, char **argv)
     switch (desafio)
     {
     case MERGE_RECURSIVO:
-        ord = MergeSort_Recursivo();
+        ord = Mergesort_Recursivo();
         break;
     case HEAP_RECURSIVO:
         ord = Heapsort_Recursivo();

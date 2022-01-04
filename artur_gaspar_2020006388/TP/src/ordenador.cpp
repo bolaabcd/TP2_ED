@@ -6,12 +6,15 @@
 
 #include "ordenador.hpp"
 
-Ordenador::Ordenador(){}
+Ordenador::Ordenador() {}
 
-void Ordenador::set_fonte(URL_Acessos* lista_urls, int numero_urls){
+void Ordenador::set_fonte(URL_Acessos *lista_urls, int numero_urls)
+{
     this->lista_urls = lista_urls;
     this->numero_urls = numero_urls;
 }
 
+void Ordenador::ordena() {}
+
 // O ponteiro usado não é alocado pelo ordenador, portanto não é preciso destruílo aqui.
-Ordenador::~Ordenador(){}
+Ordenador::~Ordenador() {}

@@ -6,11 +6,11 @@
 
 #include "rodada_intercalator.hpp"
 
-Rodada_Intercalator::Rodada_Intercalator(int num_rodadas, std::string nome_saida) : heap_url_acessos(num_rodadas), num_rodadas(num_rodadas), nome_saida(nome_saida)
+Rodada_Intercalator::Rodada_Intercalator(int n_rodadas, std::string nome_saida) : nome_saida(nome_saida), heap_url_acessos(n_rodadas), num_rodadas(n_rodadas)
 {
-    this->fitas = (std::ifstream *)malloc(num_rodadas * sizeof(URL_Acessos));
+    this->fitas = (std::ifstream *)malloc(n_rodadas * sizeof(URL_Acessos));
 
-    for (int i = 0; i < num_rodadas; i++)
+    for (int i = 0; i < n_rodadas; i++)
     {
         this->fitas[i].open("rodada-" + std::to_string(i + 1) + ".txt");
     }
