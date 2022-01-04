@@ -46,7 +46,7 @@ void Rodada_Manipulator::gera_rodadas()
 
 void Rodada_Manipulator::intercala_rodadas(std::string nome_saida)
 {
-    Rodada_Intercalator intercal(this->num_rodadas);
+    Rodada_Intercalator intercal(this->num_rodadas, nome_saida);
     intercal.intercalar();
     intercal.destruir();
 }

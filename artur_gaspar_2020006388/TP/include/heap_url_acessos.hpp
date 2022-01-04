@@ -14,15 +14,18 @@ class Heap_URL_Acessos
 {
 public:
     Heap_URL_Acessos(int num_elementos);
-    URL_Acessos adicionar(URL_Acessos url_acessos);
-    URL_Acessos pega_primeiro();
+    void adicionar(URL_Acessos url_acessos, int rodada);
+    URL_Acessos url_acessos_primeiro();
+    int rodada_primeiro();
     void tira_primeiro();
+    bool vazio();
     ~Heap_URL_Acessos();
 
 private:
     int capacidade;
     int quantidade;
     URL_Acessos *heap;
+    int *rodadas;
 };
 
 #endif

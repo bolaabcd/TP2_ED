@@ -13,13 +13,15 @@
 class Rodada_Intercalator
 {
 public:
-    Rodada_Intercalator(int num_rodadas);
+    Rodada_Intercalator(int num_rodadas, std::string nome_saida);
     void intercalar();
     void destruir();
     ~Rodada_Intercalator();
 private:
-    std::ofstream* fitas;
+    std::ifstream* fitas;
+    std::string nome_saida;
     Heap_URL_Acessos heap_url_acessos;
+    int num_rodadas;
 };
 
 
