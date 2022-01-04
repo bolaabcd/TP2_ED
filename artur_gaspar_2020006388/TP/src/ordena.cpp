@@ -24,7 +24,7 @@
 #define MERGE_NRECURSIVO 4
 
 // variaveis globais para opcoes
-static int desafio, n_fitas, n_ents;
+static int desafio, n_fitas, n_mem_prim;
 std::string reg_nome, in_nome, out_nome;
 int regmem;
 
@@ -37,7 +37,7 @@ void uso()
     fprintf(stderr, "\t-h \t\t(obter ajuda) \n");
     fprintf(stderr, "\t-i <arq>\t\t(arquivo de entrada) \n");
     fprintf(stderr, "\t-o <arq>\t\t(arquivo de saida)) \n");
-    fprintf(stderr, "\t-n <num>\t\t(numero total de entidades)\n");
+    fprintf(stderr, "\t-n <num>\t\t(numero de entidades na memoria primaria)\n");
     fprintf(stderr, "\t-f <num>\t\t(numero de fitas)\n");
     fprintf(stderr, "\t-d \t\t[1_merge, 1_heap, 2_quick, 2_merge]\t(desafio a executar)\n");
     fprintf(stderr, "\t-p \t\t<arq>\t(arquivo de registro de desempenho)\n");
@@ -65,7 +65,7 @@ void parse_args(int argc, char **argv)
     // inicializacao variaveis globais para opcoes
     desafio = -1;
     n_fitas = -1;
-    n_ents = -1;
+    n_mem_prim = -1;
     regmem = 0;
     reg_nome[0] = 0;
     in_nome[0] = 0;
@@ -87,7 +87,7 @@ void parse_args(int argc, char **argv)
         case 'n':
             avisoAssert(!f, "Mais de uma quantidade de entidades passada: o ultimo valor sera utilizado.");
             f = true;
-            n_ents = atoi(optarg);
+            n_mem_prim = atoi(optarg);
             break;
         case 'd':
             avisoAssert(desafio == -1, "Mais de um desafio escolhido: o ultimo sera utilizado.");
@@ -131,7 +131,7 @@ void parse_args(int argc, char **argv)
                 "ordena - eh necessario informar a quantidade de fitas.");
     erroAssert(n, 
                 "ordena - eh necessario informar a quantidade de entidades.");
-    erroAssert(n_ents > 0, 
+    erroAssert(n_mem_prim > 0, 
                 "ordena - quantidade de entidades invalida.");
     erroAssert(n_fitas > 0, 
                 "ordena - quantidade de fitas invalida.");
@@ -177,11 +177,12 @@ int main(int argc, char **argv)
         break;
     }
 
-    Rodada_Manipulator manipulator(in_nome, ord, n_fitas, n_ents);
+    Rodada_Manipulator manipulator(in_nome, ord, n_fitas, n_mem_prim);
 
-    manipulator.gera_rodadas();
-
-    manipulator.intercala_rodadas(out_nome);
+    while(!manipulator.acabou()){
+        manipulator.gera_rodadas();
+        manipulator.intercala_rodadas(out_nome);
+    }
 
     manipulator.destruir();
 

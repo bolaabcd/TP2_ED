@@ -7,7 +7,6 @@
 #ifndef QUICKSORT_RECURSIVO_ORDENATOR
 #define QUICKSORT_RECURSIVO_ORDENATOR
 
-#include <string>
 #include "ordenador.hpp"
 
 class Quicksort_Recursivo : public Ordenador
