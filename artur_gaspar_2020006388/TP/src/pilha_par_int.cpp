@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------
 
 #include "pilha_par_int.hpp"
+#include  <stdlib.h>
 
 Pilha_Par_Int::Pilha_Par_Int(int capacidade_inicial)
 {
@@ -26,17 +27,17 @@ void Pilha_Par_Int::adiciona(int a, int b)
     this->segundo[this->quantidade++] = b;
 }
 
-Pilha_Par_Int::topo_a()
+int Pilha_Par_Int::topo_a()
 {
     return this->primeiro[this->quantidade - 1];
 }
 
-Pilha_Par_Int::topo_b()
+int Pilha_Par_Int::topo_b()
 {
     return this->segundo[this->quantidade - 1];
 }
 
-Pilha_Par_Int::tira_topo()
+void Pilha_Par_Int::tira_topo()
 {
     this->quantidade--;
 }
