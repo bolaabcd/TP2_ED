@@ -23,8 +23,8 @@ void Quicksort_Recursivo::quicksort_interno(int l, int r)
     int i, j;
     for (i = l, j = r;;)
     {
-        for (; i <= j && this->lista_urls[i] < aux; i++);
-        for (; i <= j && aux < this->lista_urls[j]; j--);
+        for (; i <= j && aux < this->lista_urls[i]; i++);
+        for (; i <= j && this->lista_urls[j] < aux; j--);
 
         if (i > j)
             break;

@@ -9,11 +9,11 @@
 
 Rodada_Manipulator::Rodada_Manipulator(
     std::string nome_entrada,
-    Ordenador ord,
+    Ordenador *ord,
     int num_rodadas,
     int n_mem_prim) : ord(ord),
-                         num_rodadas(num_rodadas),
-                         n_mem_prim(n_mem_prim)
+                      num_rodadas(num_rodadas),
+                      n_mem_prim(n_mem_prim)
 {
     this->arq_entrada.open(nome_entrada);
 }
@@ -24,15 +24,18 @@ void Rodada_Manipulator::gera_rodadas()
     {
         URL_Acessos *url_acessos = new URL_Acessos[this->n_mem_prim];
         int i;
+        bool leu_algo = false;
         for (i = 0; i < this->n_mem_prim; i++)
         {
             this->arq_entrada >> url_acessos[i];
-            if(this->arq_entrada.eof())
+            if (this->arq_entrada.eof())
                 break;
+            leu_algo = true;
         }
-
-        this->ord.set_fonte(url_acessos, i);
-        this->ord.ordena();
+        if(!leu_algo)
+            break;
+        this->ord->set_fonte(url_acessos, i);
+        this->ord->ordena();
 
         std::ofstream arq_saida;
         arq_saida.open("rodada-" + std::to_string(k + 1) + ".txt");

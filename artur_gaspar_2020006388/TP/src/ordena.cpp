@@ -157,23 +157,29 @@ int main(int argc, char **argv)
     // ativar registro de acesso
     ativaMemLog();
 
-    Ordenador ord = Quicksort_Recursivo();
+    Ordenador *ord;
+    Quicksort_Recursivo qr = Quicksort_Recursivo();
+    Mergesort_Recursivo mr = Mergesort_Recursivo();
+    Mergesort_Nao_Recursivo mn = Mergesort_Nao_Recursivo();
+    Quicksort_Nao_Recursivo qn = Quicksort_Nao_Recursivo();
+    Heapsort_Recursivo hr = Heapsort_Recursivo();
 
     switch (desafio)
     {
     case MERGE_RECURSIVO:
-        ord = Mergesort_Recursivo();
+        ord = &mr;
         break;
     case HEAP_RECURSIVO:
-        ord = Heapsort_Recursivo();
+        ord = &hr;
         break;
     case QUICK_NRECURSIVO:
-        ord = Quicksort_Nao_Recursivo();
+        ord = &qn;
         break;
     case MERGE_NRECURSIVO:
-        ord = Mergesort_Nao_Recursivo();
+        ord = &mn;
         break;
     default:
+        ord = &qr;
         break;
     }
 

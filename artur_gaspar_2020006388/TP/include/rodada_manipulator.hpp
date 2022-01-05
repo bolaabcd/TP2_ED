@@ -16,11 +16,10 @@ class Rodada_Manipulator
 {
 public:
     Rodada_Manipulator(
-        std::string nome_entrada, 
-        Ordenador ord, 
-        int num_rodadas, 
-        int n_mem_prim
-    );
+        std::string nome_entrada,
+        Ordenador *ord,
+        int num_rodadas,
+        int n_mem_prim);
     void gera_rodadas();
     void intercala_rodadas(std::string nome_saida);
     bool acabou();
@@ -28,7 +27,7 @@ public:
     ~Rodada_Manipulator();
 
 private:
-    Ordenador ord;
+    Ordenador *ord;
     std::ifstream arq_entrada;
     int num_rodadas;
     int n_mem_prim;

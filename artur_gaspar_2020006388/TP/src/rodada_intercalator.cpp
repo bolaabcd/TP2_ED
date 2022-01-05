@@ -34,7 +34,7 @@ void Rodada_Intercalator::intercalar()
         int rod_prim = this->heap_url_acessos.rodada_primeiro();
         this->heap_url_acessos.tira_primeiro();
 
-        arq_saida << url_acessos;
+        arq_saida << url_acessos << std::endl;
         
         fitas[rod_prim] >> url_acessos;
 
