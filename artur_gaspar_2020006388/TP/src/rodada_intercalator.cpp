@@ -25,6 +25,8 @@ void Rodada_Intercalator::intercalar()
     {
         URL_Acessos url_acessos;
         fitas[i] >> url_acessos;
+        if(!fitas[i].good())
+            break;
         this->heap_url_acessos.adicionar(url_acessos, i);
     }
 

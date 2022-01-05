@@ -37,8 +37,8 @@ void uso()
     fprintf(stderr, "\t-h      \t(obter ajuda) \n");
     fprintf(stderr, "\t-i <arq>\t(arquivo de entrada) \n");
     fprintf(stderr, "\t-o <arq>\t(arquivo de saida)) \n");
-    fprintf(stderr, "\t-n <num>\t(numero de entidades na memoria primaria)\n");
-    fprintf(stderr, "\t-f <num>\t(numero de fitas)\n");
+    fprintf(stderr, "\t-n <num>\t(limite de entidades na memoria primaria: maximo por fita)\n");
+    fprintf(stderr, "\t-f <num>\t(limite de fitas, preenche cada fita ate ter esse numero de fitas)\n");
     fprintf(stderr, "\t-d      \t[1_merge, 1_heap, 2_quick, 2_merge]\t(desafio a executar)\n");
     fprintf(stderr, "\t-p      \t<arq>\t(arquivo de registro de desempenho)\n");
     fprintf(stderr, "\t-l      \t(registrar padrao de acesso e localidade)\n");
