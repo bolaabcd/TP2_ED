@@ -25,10 +25,14 @@ void Mergesort_Recursivo::mergesort_interno(int l, int r)
     {
         if (this->lista_urls[i] < this->lista_urls[j])
         {
-            //Trocando elementos
+            // Trocando elementos
             URL_Acessos a = this->lista_urls[i];
             this->lista_urls[i] = this->lista_urls[j];
-            this->lista_urls[j++] = a;
+            this->lista_urls[j] = a;
+        }
+        else
+        {
+            j++;
         }
     }
 }
