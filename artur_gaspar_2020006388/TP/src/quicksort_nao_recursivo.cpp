@@ -24,8 +24,8 @@ void Quicksort_Nao_Recursivo::ordena(){
         URL_Acessos aux = this->lista_urls[meio];
         int i, j;
         for(i = l, j = r; i <= j ; ) {
-            for(;i <= j && this->lista_urls[i] < aux; i++);
-            for(;i <= j && aux < this->lista_urls[j]; j--);
+            for(;i <= j && aux < this->lista_urls[i]; i++);
+            for(;i <= j && this->lista_urls[j] < aux; j--);
             if (i > j)
                 break;
             
