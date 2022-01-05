@@ -24,5 +24,5 @@ std::istream &operator>>(std::istream &in, URL_Acessos &url_acessos)
 
 std::ostream &operator<<(std::ostream &out, URL_Acessos &url_acessos)
 {
-    return out << url_acessos.url << " " << url_acessos.quantidade << std::endl;
+    return out << url_acessos.url << " " << url_acessos.quantidade;
 }

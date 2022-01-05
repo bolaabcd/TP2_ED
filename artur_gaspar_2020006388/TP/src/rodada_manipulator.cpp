@@ -24,9 +24,11 @@ void Rodada_Manipulator::gera_rodadas()
     {
         URL_Acessos *url_acessos = new URL_Acessos[this->n_mem_prim];
         int i;
-        for (i = 0; i < this->n_mem_prim && !this->arq_entrada.eof(); i++)
+        for (i = 0; i < this->n_mem_prim; i++)
         {
             this->arq_entrada >> url_acessos[i];
+            if(this->arq_entrada.eof())
+                break;
         }
 
         this->ord.set_fonte(url_acessos, i);
