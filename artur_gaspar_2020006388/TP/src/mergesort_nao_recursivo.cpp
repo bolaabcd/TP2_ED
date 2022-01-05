@@ -47,7 +47,11 @@ void Mergesort_Nao_Recursivo::ordena()
                 // Trocando elementos
                 URL_Acessos a = this->lista_urls[i];
                 this->lista_urls[i] = this->lista_urls[j];
-                this->lista_urls[j++] = a;
+                this->lista_urls[j] = a;
+            }
+            else
+            {
+                j++;
             }
         }
     }

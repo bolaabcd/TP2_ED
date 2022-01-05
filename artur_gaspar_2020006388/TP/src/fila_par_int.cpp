@@ -14,7 +14,7 @@ Fila_Par_Int::Fila_Par_Int(int capacidade)
     this->quantidade = 0;
     this->primeiro = new int[capacidade];
     this->pos_init = 0;
-    this->pos_final = 1;
+    this->pos_final = 0;
     this->segundo = new int[capacidade];
 }
 
@@ -43,7 +43,7 @@ void Fila_Par_Int::tira_primeiro()
 {
     erroAssert(this->quantidade > 0, "Fila vazia, nao eh possivel remover elementos.");
     int n = this->capacidade;
-    this->pos_final = (this->pos_final - 1 + n) % n;
+    this->pos_init = (this->pos_init + 1 + n) % n;
     this->quantidade--;
 }
 
