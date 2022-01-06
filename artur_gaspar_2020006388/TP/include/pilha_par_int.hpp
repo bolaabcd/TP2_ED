@@ -9,21 +9,21 @@
 
 class Pilha_Par_Int
 {
-    public:
-        Pilha_Par_Int(int capacidade_inicial);
-        void adiciona(int a, int b);
-        int topo_a();
-        int topo_b();
-        void tira_topo();
-        bool vazia();
-        void destruir();
-        ~Pilha_Par_Int();
-    private:
-        int capacidade;
-        int quantidade;
-        int* primeiro;
-        int* segundo;
-};
+public:
+    Pilha_Par_Int(int capacidade_inicial);
+    void adiciona(int a, int b);
+    int topo_a();
+    int topo_b();
+    void tira_topo();
+    bool vazia();
+    void destruir();
+    ~Pilha_Par_Int();
 
+private:
+    int capacidade;
+    int quantidade;
+    int *primeiro;
+    int *segundo;
+};
 
 #endif

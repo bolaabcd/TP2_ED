@@ -12,14 +12,14 @@
 class Ordenador
 {
 public:
-   Ordenador();
-   void set_fonte(URL_Acessos* lista_urls, int numero_urls); 
-   virtual void ordena();
-   ~Ordenador();
+    Ordenador();
+    void set_fonte(URL_Acessos *lista_urls, int numero_urls);
+    virtual void ordena();
+    ~Ordenador();
+
 protected:
-    URL_Acessos* lista_urls;
+    URL_Acessos *lista_urls;
     int numero_urls;
 };
-
 
 #endif

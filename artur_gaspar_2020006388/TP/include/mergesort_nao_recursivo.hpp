@@ -11,10 +11,9 @@
 
 class Mergesort_Nao_Recursivo : public Ordenador
 {
-    public:
-        Mergesort_Nao_Recursivo();
-        void ordena() override;
+public:
+    Mergesort_Nao_Recursivo();
+    void ordena() override;
 };
-
 
 #endif

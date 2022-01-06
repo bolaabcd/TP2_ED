@@ -17,12 +17,12 @@ public:
     void intercalar();
     void destruir();
     ~Rodada_Intercalator();
+
 private:
-    std::ifstream* fitas;
+    std::ifstream *fitas;
     std::string nome_saida;
     Heap_URL_Acessos heap_url_acessos;
     int num_rodadas;
 };
-
 
 #endif

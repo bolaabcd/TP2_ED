@@ -11,12 +11,12 @@
 
 class Mergesort_Recursivo : public Ordenador
 {
-    public:
-        Mergesort_Recursivo();
-        void ordena() override;
-    private:
-        void mergesort_interno(int l, int r);
-};
+public:
+    Mergesort_Recursivo();
+    void ordena() override;
 
+private:
+    void mergesort_interno(int l, int r);
+};
 
 #endif

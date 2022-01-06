@@ -11,12 +11,12 @@
 
 class Quicksort_Recursivo : public Ordenador
 {
-    public:
-        Quicksort_Recursivo();
-        void ordena() override;
-    private:
-        void quicksort_interno(int l, int r);
-};
+public:
+    Quicksort_Recursivo();
+    void ordena() override;
 
+private:
+    void quicksort_interno(int l, int r);
+};
 
 #endif

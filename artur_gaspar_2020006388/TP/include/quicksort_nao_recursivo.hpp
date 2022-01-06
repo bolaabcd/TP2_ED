@@ -11,10 +11,9 @@
 
 class Quicksort_Nao_Recursivo : public Ordenador
 {
-    public:
-        Quicksort_Nao_Recursivo();
-        void ordena() override;
+public:
+    Quicksort_Nao_Recursivo();
+    void ordena() override;
 };
-
 
 #endif
