@@ -128,13 +128,13 @@ void parse_args(int argc, char **argv)
     }
     // verificacao da consistencia das opcoes
     erroAssert(f,
-                "ordena - eh necessario informar a quantidade de fitas.");
-    erroAssert(n, 
-                "ordena - eh necessario informar a quantidade de entidades por fita.");
-    erroAssert(n_mem_prim > 0, 
-                "ordena - quantidade de entidades por fita invalida.");
-    erroAssert(n_fitas > 0, 
-                "ordena - quantidade de fitas invalida.");
+               "ordena - eh necessario informar a quantidade de fitas.");
+    erroAssert(n,
+               "ordena - eh necessario informar a quantidade de entidades por fita.");
+    erroAssert(n_mem_prim > 0,
+               "ordena - quantidade de entidades por fita invalida.");
+    erroAssert(n_fitas > 0,
+               "ordena - quantidade de fitas invalida.");
     erroAssert(reg_nome.length() > 0,
                "ordena - nome de arquivo de registro de acesso tem que ser definido.");
     erroAssert(in_nome.length() > 0,
@@ -185,7 +185,8 @@ int main(int argc, char **argv)
 
     Rodada_Manipulator manipulator(in_nome, ord, n_fitas, n_mem_prim);
 
-    while(!manipulator.acabou()){
+    while (!manipulator.acabou())
+    {
         manipulator.gera_rodadas();
         manipulator.intercala_rodadas(out_nome);
     }

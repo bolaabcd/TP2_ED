@@ -7,6 +7,9 @@
 #include "rodada_intercalator.hpp"
 
 Rodada_Intercalator::Rodada_Intercalator(int n_rodadas, std::string nome_saida) : nome_saida(nome_saida), heap_url_acessos(n_rodadas), num_rodadas(n_rodadas)
+// Descricao: construtor do intercalador de rodadas.
+// Entrada: numero maximo de rodadas aceitos e nome do arquivo de saida.
+// Saida: instância do tipo Rodada_Intercalator.
 {
     this->fitas = new std::ifstream[n_rodadas];
 
@@ -17,6 +20,9 @@ Rodada_Intercalator::Rodada_Intercalator(int n_rodadas, std::string nome_saida) 
 }
 
 void Rodada_Intercalator::intercalar()
+// Descricao: intercala as fitas.
+// Entrada: le dos arquivos de fita (rodada-x.txt).
+// Saida: altera o arquivo de saida.
 {
     std::ofstream arq_saida;
     arq_saida.open(this->nome_saida);
@@ -25,7 +31,7 @@ void Rodada_Intercalator::intercalar()
     {
         URL_Acessos url_acessos;
         fitas[i] >> url_acessos;
-        if(!fitas[i].good())
+        if (!fitas[i].good())
             break;
         this->heap_url_acessos.adicionar(url_acessos, i);
     }
@@ -37,17 +43,20 @@ void Rodada_Intercalator::intercalar()
         this->heap_url_acessos.tira_primeiro();
 
         arq_saida << url_acessos << std::endl;
-        
+
         fitas[rod_prim] >> url_acessos;
 
-        if(!fitas[rod_prim].eof())
-            this->heap_url_acessos.adicionar(url_acessos,rod_prim);
+        if (!fitas[rod_prim].eof())
+            this->heap_url_acessos.adicionar(url_acessos, rod_prim);
     }
 }
 
 void Rodada_Intercalator::destruir()
+// Descricao: destroi o manipulador de rodadas.
+// Entrada: nao tem.
+// Saida: nao tem.
 {
-    if(this->fitas == nullptr)
+    if (this->fitas == nullptr)
         return;
     for (int i = 0; i < this->num_rodadas; i++)
     {
@@ -58,6 +67,9 @@ void Rodada_Intercalator::destruir()
 }
 
 Rodada_Intercalator::~Rodada_Intercalator()
+// Descricao: destrutor padrao do manipulador de rodadas.
+// Entrada: nao tem.
+// Saida: nao tem.
 {
     destruir();
 }

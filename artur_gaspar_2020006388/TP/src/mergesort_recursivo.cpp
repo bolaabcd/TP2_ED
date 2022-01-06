@@ -6,14 +6,25 @@
 
 #include "mergesort_recursivo.hpp"
 
-Mergesort_Recursivo::Mergesort_Recursivo() {}
+Mergesort_Recursivo::Mergesort_Recursivo()
+// Descricao: construtor de Ordenadores que implementam heapsort recursivo.
+// Entrada: nao tem.
+// Saida: instância do tipo Heapsort_Recursivo.
+{
+}
 
 void Mergesort_Recursivo::ordena()
+// Descricao: ordena elementos segundo o algoritmo.
+// Entrada: nao tem.
+// Saida: ordena o array em this->lista_urls.
 {
     this->mergesort_interno(0, this->numero_urls - 1);
 }
 
 void Mergesort_Recursivo::mergesort_interno(int l, int r)
+// Descricao: funcao auxiliar recursiva do mergesort.
+// Entrada: extremos do intervalo de ordenacao [l, r] do passo atual.
+// Saida: altera o array em this->lista_urls.
 {
     if (l == r)
         return;

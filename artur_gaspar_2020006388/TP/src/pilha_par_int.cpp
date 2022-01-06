@@ -5,17 +5,24 @@
 //---------------------------------------------------------------------
 
 #include "pilha_par_int.hpp"
-#include  <stdlib.h>
+#include <stdlib.h>
 
 Pilha_Par_Int::Pilha_Par_Int(int capacidade_inicial)
+// Descricao: construtor de pilha de par de inteiros que implementam heapsort
+// recursivo.
+// Entrada: capacidade inicial da pilha (muda durante a execucao se necessario).
+// Saida: instância do tipo Pilha_Par_Int.
 {
     this->capacidade = capacidade_inicial;
     this->quantidade = 0;
-    this->primeiro = new int[capacidade_inicial];
-    this->segundo = new int[capacidade_inicial];
+    this->primeiro = (int *)malloc(capacidade_inicial * sizeof(int));
+    this->segundo = (int *)malloc(capacidade_inicial * sizeof(int));
 }
 
 void Pilha_Par_Int::adiciona(int a, int b)
+// Descricao: adiciona par de inteiros a pilha.
+// Entrada: valores do par a adicionar.
+// Saida: altera os arrays this->primeiro e this->segundo.
 {
     if (this->capacidade < this->quantidade + 1)
     {
@@ -28,26 +35,43 @@ void Pilha_Par_Int::adiciona(int a, int b)
 }
 
 int Pilha_Par_Int::topo_a()
+// Descricao: informa o primeiro inteiro do primeiro elemento da pilha.
+// Entrada: nao tem.
+// Saida: primeiro inteiro do primeiro elemento da pilha.
 {
     return this->primeiro[this->quantidade - 1];
 }
 
 int Pilha_Par_Int::topo_b()
+// Descricao: informa o segundo inteiro do primeiro elemento da pilha.
+// Entrada: nao tem.
+// Saida: segundo inteiro do primeiro elemento da pilha.
 {
     return this->segundo[this->quantidade - 1];
 }
 
 void Pilha_Par_Int::tira_topo()
+// Descricao: tira o primeiro elemento da pilha.
+// Entrada: nao tem.
+// Saida: nao tem.
 {
     this->quantidade--;
 }
 
-bool Pilha_Par_Int::vazia() {
-    return this->quantidade==0;
+bool Pilha_Par_Int::vazia()
+// Descricao: informa se a pilha esta vazia.
+// Entrada: nao tem.
+// Saida: verdadeiro se esta vazia, falso caso contrario.
+{
+    return this->quantidade == 0;
 }
 
-void Pilha_Par_Int::destruir(){
-    if(this->capacidade == 0)
+void Pilha_Par_Int::destruir()
+// Descricao: destroi a pilha.
+// Entrada: nao tem.
+// Saida: nao tem.
+{
+    if (this->capacidade == 0)
         return;
     delete[] this->primeiro;
     delete[] this->segundo;
@@ -55,6 +79,10 @@ void Pilha_Par_Int::destruir(){
     this->capacidade = 0;
 }
 
-Pilha_Par_Int::~Pilha_Par_Int(){
+Pilha_Par_Int::~Pilha_Par_Int()
+// Descricao: destruidor padrao da pilha.
+// Entrada: nao tem.
+// Saida: nao tem.
+{
     this->destruir();
 }

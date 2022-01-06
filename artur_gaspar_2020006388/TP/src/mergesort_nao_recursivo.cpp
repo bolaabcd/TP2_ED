@@ -8,9 +8,17 @@
 #include "pilha_par_int.hpp"
 #include "fila_par_int.hpp"
 
-Mergesort_Nao_Recursivo::Mergesort_Nao_Recursivo() {}
+Mergesort_Nao_Recursivo::Mergesort_Nao_Recursivo()
+// Descricao: construtor de Ordenadores que implementam heapsort recursivo.
+// Entrada: nao tem.
+// Saida: instância do tipo Heapsort_Recursivo.
+{
+}
 
 void Mergesort_Nao_Recursivo::ordena()
+// Descricao: ordena elementos segundo o algoritmo.
+// Entrada: nao tem.
+// Saida: ordena o array em this->lista_urls.
 {
     Pilha_Par_Int a_processar(this->numero_urls);
     Fila_Par_Int a_adicionar(this->numero_urls * 3);
