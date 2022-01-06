@@ -6,6 +6,7 @@
 
 #include "rodada_manipulator.hpp"
 #include "url_acessos.hpp"
+#include "msgassert.hpp"
 
 Rodada_Manipulator::Rodada_Manipulator(
     std::string nome_entrada,
@@ -19,7 +20,11 @@ Rodada_Manipulator::Rodada_Manipulator(
 // na memoria primaria, ordenador a ser utilizado e nome do arquivo de entrada.
 // Saida: instância do tipo Rodada_Manipulator.
 {
+    erroAssert(num_rodadas > 0, "O numero de rodadas do manipulador deve ser positivo.");
+    erroAssert(n_mem_prim > 0, "O numero de elementos aceitos na memoria primaria deve ser positivo.");
+
     this->arq_entrada.open(nome_entrada);
+    erroAssert(!this->arq_entrada.fail(), "Erro ao abrir arquivo de entrada.");
 }
 
 void Rodada_Manipulator::gera_rodadas()
@@ -39,13 +44,15 @@ void Rodada_Manipulator::gera_rodadas()
                 break;
             leu_algo = true;
         }
+
+        std::ofstream arq_saida;
+        arq_saida.open("rodada-" + std::to_string(k + 1) + ".txt");
+        erroAssert(!arq_saida.fail(), "Erro ao abrir arquivo de rodada para escrita.");
+
         if (!leu_algo)
             break;
         this->ord->set_fonte(url_acessos, i);
         this->ord->ordena();
-
-        std::ofstream arq_saida;
-        arq_saida.open("rodada-" + std::to_string(k + 1) + ".txt");
 
         for (int j = 0; j < i; j++)
         {

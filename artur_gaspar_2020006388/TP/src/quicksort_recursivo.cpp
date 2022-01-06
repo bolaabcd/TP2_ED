@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------
 
 #include "quicksort_recursivo.hpp"
+#include "msgassert.hpp"
 
 Quicksort_Recursivo::Quicksort_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -29,6 +30,8 @@ void Quicksort_Recursivo::quicksort_interno(int l, int r)
 {
     if (l >= r)
         return;
+    erroAssert(l < r, "Intervalo invalido no quicksort recursivo.");
+
     int meio = (l + r) / 2;
 
     URL_Acessos aux = this->lista_urls[meio];

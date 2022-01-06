@@ -6,6 +6,7 @@
 
 #include "quicksort_nao_recursivo.hpp"
 #include "pilha_par_int.hpp"
+#include "msgassert.hpp"
 
 Quicksort_Nao_Recursivo::Quicksort_Nao_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -29,6 +30,7 @@ void Quicksort_Nao_Recursivo::ordena()
 
         if (l >= r)
             continue;
+        erroAssert(l < r, "Intervalo invalido no quicksort nao recursivo.");
 
         int meio = (l + r) / 2;
         URL_Acessos aux = this->lista_urls[meio];

@@ -6,6 +6,7 @@
 
 #include "pilha_par_int.hpp"
 #include <stdlib.h>
+#include "msgassert.hpp"
 
 Pilha_Par_Int::Pilha_Par_Int(int capacidade_inicial)
 // Descricao: construtor de pilha de par de inteiros que implementam heapsort
@@ -39,6 +40,8 @@ int Pilha_Par_Int::topo_a()
 // Entrada: nao tem.
 // Saida: primeiro inteiro do primeiro elemento da pilha.
 {
+    erroAssert(!this->vazia(), "Pilha vazia, nao eh possivel obter primeiro elemento");
+
     return this->primeiro[this->quantidade - 1];
 }
 
@@ -47,6 +50,8 @@ int Pilha_Par_Int::topo_b()
 // Entrada: nao tem.
 // Saida: segundo inteiro do primeiro elemento da pilha.
 {
+    erroAssert(!this->vazia(), "Pilha vazia, nao eh possivel obter primeiro elemento");
+
     return this->segundo[this->quantidade - 1];
 }
 
@@ -55,6 +60,8 @@ void Pilha_Par_Int::tira_topo()
 // Entrada: nao tem.
 // Saida: nao tem.
 {
+    erroAssert(!this->vazia(), "Pilha vazia, nao eh possivel tirar primeiro elemento");
+
     this->quantidade--;
 }
 

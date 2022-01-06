@@ -14,6 +14,7 @@ Heap_URL_Acessos::Heap_URL_Acessos(int num_elementos)
 // durante a execucao do programa).
 // Saida: instância de Heap de URL_Acessos.
 {
+    erroAssert(num_elementos >= 0, "Nao eh permitido heap de capacidade negativa");
     this->capacidade = num_elementos;
     this->quantidade = 0;
     this->heap = new URL_Acessos[num_elementos + 1];
@@ -25,6 +26,8 @@ void Heap_URL_Acessos::adicionar(URL_Acessos url_acessos, int rodada)
 // Entrada: URL_Acessos a ser adicionada e sua rodada correspondente.
 // Saida: nao tem.
 {
+    erroAssert(rodada >= 0, "A rodada nao pode ser um valor negativo.");
+
     this->rodadas[++this->quantidade] = rodada;
     this->heap[this->quantidade] = url_acessos;
 
@@ -37,6 +40,7 @@ URL_Acessos Heap_URL_Acessos::url_acessos_primeiro()
 // Entrada: nao tem.
 // Saida: primeiro elemento do heap.
 {
+    erroAssert(!this->vazio(), "Nao eh possivel obter o primeiro elemento de um heap vazio");
     return this->heap[1];
 }
 
@@ -45,6 +49,7 @@ int Heap_URL_Acessos::rodada_primeiro()
 // Entrada: nao tem.
 // Saida: rodada do primeiro elemento do heap.
 {
+    erroAssert(!this->vazio(), "Nao eh possivel obter o primeiro elemento de um heap vazio");
     return this->rodadas[1];
 }
 
@@ -54,8 +59,11 @@ void Heap_URL_Acessos::tira_primeiro()
 // Entrada: nao tem.
 // Saida: nao tem.
 {
+    erroAssert(!this->vazio(), "Nao eh possivel tirar o primeiro elemento de um heap vazio");
     heap[1] = heap[this->quantidade];
     rodadas[1] = rodadas[this->quantidade--];
+    if (this->quantidade == 0)
+        return;
     refaz(1, this->quantidade);
 }
 
@@ -85,6 +93,7 @@ void Heap_URL_Acessos::refaz(int l, int tam)
 // Entrada: posicao inicial a refazer e tamanho total do heap.
 // Saida: altera o this->heap e o this->rodadas.
 {
+    erroAssert(l >= 1 && l <= tam, "Valores invalidos para o algoritmo de heap.");
     int pai = l;
     URL_Acessos filhoR, filhoL;
     if (2 * l + 1 <= tam)

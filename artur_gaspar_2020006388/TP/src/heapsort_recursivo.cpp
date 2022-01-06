@@ -6,6 +6,7 @@
 
 #include "heapsort_recursivo.hpp"
 #include "url_acessos.hpp"
+#include "msgassert.hpp"
 
 Heapsort_Recursivo::Heapsort_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -40,6 +41,8 @@ void Heapsort_Recursivo::refaz(int l, int tam)
 // Entrada: posicao inicial a refazer e tamanho total do heap.
 // Saida: altera o this->heap e o this->rodadas.
 {
+    erroAssert((l >= 1 && l <= tam), "Valores invalidos para o algoritmo de heap.");
+
     int pai = l;
     URL_Acessos filhoR, filhoL;
     int menor = 2 * l;

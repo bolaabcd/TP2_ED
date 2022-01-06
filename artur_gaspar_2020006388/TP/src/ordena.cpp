@@ -132,9 +132,9 @@ void parse_args(int argc, char **argv)
     erroAssert(n,
                "ordena - eh necessario informar a quantidade de entidades por fita.");
     erroAssert(n_mem_prim > 0,
-               "ordena - quantidade de entidades por fita invalida.");
+               "ordena - quantidade de entidades por fita deve ser positiva.");
     erroAssert(n_fitas > 0,
-               "ordena - quantidade de fitas invalida.");
+               "ordena - quantidade de fitas deve ser positiva.");
     erroAssert(reg_nome.length() > 0,
                "ordena - nome de arquivo de registro de acesso tem que ser definido.");
     erroAssert(in_nome.length() > 0,

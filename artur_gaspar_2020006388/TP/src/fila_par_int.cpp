@@ -13,6 +13,7 @@ Fila_Par_Int::Fila_Par_Int(int capacidade)
 // Entrada: capacidade da fila (nao muda durante a execucao do programa).
 // Saida: instância de fila de par de inteiros.
 {
+    erroAssert(capacidade >= 0, "Nao eh permitido fila de capacidade negativa");
     this->capacidade = ++capacidade;
     this->quantidade = 0;
     this->primeiro = new int[capacidade];
@@ -40,6 +41,7 @@ int Fila_Par_Int::primeiro_a()
 // Entrada: nao tem.
 // Saida: primeiro inteiro do primeiro elemento da fila.
 {
+    erroAssert(!this->vazia(), "Fila vazia, nao eh possivel obter primeiro elemento");
     return this->primeiro[this->pos_init];
 }
 
@@ -48,6 +50,7 @@ int Fila_Par_Int::primeiro_b()
 // Entrada: nao tem.
 // Saida: primeiro inteiro do primeiro elemento da fila.
 {
+    erroAssert(!this->vazia(), "Fila vazia, nao eh possivel obter primeiro elemento");
     return this->segundo[this->pos_init];
 }
 
@@ -56,7 +59,7 @@ void Fila_Par_Int::tira_primeiro()
 // Entrada: nao tem.
 // Saida: nao tem.
 {
-    erroAssert(this->quantidade > 0, "Fila vazia, nao eh possivel remover elementos.");
+    erroAssert(!this->vazia(), "Fila vazia, nao eh possivel remover elementos.");
     int n = this->capacidade;
     this->pos_init = (this->pos_init + 1 + n) % n;
     this->quantidade--;

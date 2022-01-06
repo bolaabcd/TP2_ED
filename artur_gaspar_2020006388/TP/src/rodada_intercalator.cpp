@@ -5,17 +5,20 @@
 //---------------------------------------------------------------------
 
 #include "rodada_intercalator.hpp"
+#include "msgassert.hpp"
 
 Rodada_Intercalator::Rodada_Intercalator(int n_rodadas, std::string nome_saida) : nome_saida(nome_saida), heap_url_acessos(n_rodadas), num_rodadas(n_rodadas)
 // Descricao: construtor do intercalador de rodadas.
 // Entrada: numero maximo de rodadas aceitos e nome do arquivo de saida.
 // Saida: instância do tipo Rodada_Intercalator.
 {
+    erroAssert(n_rodadas > 0, "O numero de rodadas a intercalar deve ser positivo.");
     this->fitas = new std::ifstream[n_rodadas];
 
     for (int i = 0; i < n_rodadas; i++)
     {
         this->fitas[i].open("rodada-" + std::to_string(i + 1) + ".txt");
+        erroAssert(!this->fitas[i].fail(), "Erro ao abrir arquivo de fita.");
     }
 }
 
@@ -26,6 +29,7 @@ void Rodada_Intercalator::intercalar()
 {
     std::ofstream arq_saida;
     arq_saida.open(this->nome_saida);
+    erroAssert(!arq_saida.fail(), "Erro ao abrir arquivo de saida.");
 
     for (int i = 0; i < this->num_rodadas; i++)
     {

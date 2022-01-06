@@ -5,6 +5,7 @@
 //---------------------------------------------------------------------
 
 #include "mergesort_recursivo.hpp"
+#include "msgassert.hpp"
 
 Mergesort_Recursivo::Mergesort_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -28,6 +29,8 @@ void Mergesort_Recursivo::mergesort_interno(int l, int r)
 {
     if (l == r)
         return;
+    erroAssert(l < r, "Intervalo invalido no mergesort recursivo.");
+
     int meio = (r + l) / 2;
     mergesort_interno(l, meio);
     mergesort_interno(meio + 1, r);

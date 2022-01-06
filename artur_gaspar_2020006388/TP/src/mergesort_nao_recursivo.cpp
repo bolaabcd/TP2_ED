@@ -7,6 +7,7 @@
 #include "mergesort_nao_recursivo.hpp"
 #include "pilha_par_int.hpp"
 #include "fila_par_int.hpp"
+#include "msgassert.hpp"
 
 Mergesort_Nao_Recursivo::Mergesort_Nao_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -33,6 +34,8 @@ void Mergesort_Nao_Recursivo::ordena()
         if (l == r)
             continue;
 
+        erroAssert(l < r, "Intervalo invalido no mergesort nao recursivo.");
+
         a_processar.adiciona(l, r);
 
         int meio = (l + r) / 2;
@@ -45,6 +48,8 @@ void Mergesort_Nao_Recursivo::ordena()
         int l = a_processar.topo_a();
         int r = a_processar.topo_b();
         a_processar.tira_topo();
+
+        erroAssert(l < r, "Intervalo invalido no mergesort nao recursivo.");
 
         int meio = (l + r) / 2;
 
