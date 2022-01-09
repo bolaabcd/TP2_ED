@@ -14,7 +14,7 @@ Pilha_Par_Int::Pilha_Par_Int(int capacidade_inicial)
 // Entrada: capacidade inicial da pilha (muda durante a execucao se necessario).
 // Saida: instância do tipo Pilha_Par_Int.
 {
-    erroAssert(capacidade >= 0, "Nao eh permitido pilha de capacidade negativa");
+    erroAssert(capacidade_inicial >= 0, "Nao eh permitido pilha de capacidade negativa");
     this->capacidade = capacidade_inicial;
     this->quantidade = 0;
     this->primeiro = (int *)malloc(capacidade_inicial * sizeof(int));

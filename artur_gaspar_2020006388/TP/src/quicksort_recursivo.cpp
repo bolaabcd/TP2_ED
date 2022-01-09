@@ -6,6 +6,7 @@
 
 #include "quicksort_recursivo.hpp"
 #include "msgassert.hpp"
+#include "memlog.hpp"
 
 Quicksort_Recursivo::Quicksort_Recursivo()
 // Descricao: construtor de Ordenadores que implementam heapsort recursivo.
@@ -35,21 +36,26 @@ void Quicksort_Recursivo::quicksort_interno(int l, int r)
     int meio = (l + r) / 2;
 
     URL_Acessos aux = this->lista_urls[meio];
+    leMemLog((long int)&this->lista_urls[meio], sizeof(URL_Acessos));
     int i, j;
     for (i = l, j = r;;)
     {
         for (; i <= j && aux < this->lista_urls[i]; i++)
-            ;
+            leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
         for (; i <= j && this->lista_urls[j] < aux; j--)
-            ;
+            leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
 
         if (i > j)
             break;
 
         // Trocando elementos
         URL_Acessos a = this->lista_urls[i];
+        leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
         this->lista_urls[i++] = this->lista_urls[j];
+        leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
+        escreveMemLog((long int)&this->lista_urls[i - 1], sizeof(URL_Acessos));
         this->lista_urls[j--] = a;
+        escreveMemLog((long int)&this->lista_urls[j + 1], sizeof(URL_Acessos));
     }
 
     quicksort_interno(l, j);

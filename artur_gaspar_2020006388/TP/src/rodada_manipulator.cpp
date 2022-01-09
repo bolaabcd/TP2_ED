@@ -7,6 +7,7 @@
 #include "rodada_manipulator.hpp"
 #include "url_acessos.hpp"
 #include "msgassert.hpp"
+#include "memlog.hpp"
 
 Rodada_Manipulator::Rodada_Manipulator(
     std::string nome_entrada,
@@ -40,6 +41,7 @@ void Rodada_Manipulator::gera_rodadas()
         for (i = 0; i < this->n_mem_prim; i++)
         {
             this->arq_entrada >> url_acessos[i];
+            escreveMemLog((long int)&url_acessos[i], sizeof(URL_Acessos));
             if (this->arq_entrada.eof())
                 break;
             leu_algo = true;
@@ -57,6 +59,7 @@ void Rodada_Manipulator::gera_rodadas()
         for (int j = 0; j < i; j++)
         {
             arq_saida << url_acessos[j] << std::endl;
+            leMemLog((long int)&url_acessos[j], sizeof(URL_Acessos));
         }
         arq_saida.close();
         delete[] url_acessos;

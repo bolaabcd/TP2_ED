@@ -7,6 +7,7 @@
 #include "heap_url_acessos.hpp"
 #include "url_acessos.hpp"
 #include "msgassert.hpp"
+#include "memlog.hpp"
 
 Heap_URL_Acessos::Heap_URL_Acessos(int num_elementos)
 // Descricao: construtor de heap de elementos URL_Acessos.
@@ -29,6 +30,7 @@ void Heap_URL_Acessos::adicionar(URL_Acessos url_acessos, int rodada)
     erroAssert(rodada >= 0, "A rodada nao pode ser um valor negativo.");
 
     this->rodadas[++this->quantidade] = rodada;
+    escreveMemLog((long int)&this->heap[this->quantidade], sizeof(URL_Acessos));
     this->heap[this->quantidade] = url_acessos;
 
     for (int i = this->quantidade / 2; i > 0; i /= 2)
@@ -41,6 +43,7 @@ URL_Acessos Heap_URL_Acessos::url_acessos_primeiro()
 // Saida: primeiro elemento do heap.
 {
     erroAssert(!this->vazio(), "Nao eh possivel obter o primeiro elemento de um heap vazio");
+    leMemLog((long int)&this->heap[1], sizeof(URL_Acessos));
     return this->heap[1];
 }
 
@@ -60,8 +63,10 @@ void Heap_URL_Acessos::tira_primeiro()
 // Saida: nao tem.
 {
     erroAssert(!this->vazio(), "Nao eh possivel tirar o primeiro elemento de um heap vazio");
-    heap[1] = heap[this->quantidade];
-    rodadas[1] = rodadas[this->quantidade--];
+    this->heap[1] = heap[this->quantidade];
+    escreveMemLog((long int)&this->heap[1], sizeof(URL_Acessos));
+    this->rodadas[1] = rodadas[this->quantidade--];
+
     if (this->quantidade == 0)
         return;
     refaz(1, this->quantidade);
@@ -100,6 +105,8 @@ void Heap_URL_Acessos::refaz(int l, int tam)
     {
         filhoL = this->heap[2 * l + 1];
         filhoR = this->heap[2 * l];
+        leMemLog((long int)&this->heap[2 * l + 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->heap[2 * l], sizeof(URL_Acessos));
     }
     else if (2 * l <= tam)
     {
@@ -121,8 +128,12 @@ void Heap_URL_Acessos::refaz(int l, int tam)
     {
         // Trocando elementos
         URL_Acessos url_pai = this->heap[pai];
+        leMemLog((long int)&this->heap[pai], sizeof(URL_Acessos));
         this->heap[pai] = this->heap[maior];
+        leMemLog((long int)&this->heap[maior], sizeof(URL_Acessos));
+        escreveMemLog((long int)&this->heap[pai], sizeof(URL_Acessos));
         this->heap[maior] = url_pai;
+        escreveMemLog((long int)&this->heap[maior], sizeof(URL_Acessos));
 
         int rodadas_pai = this->rodadas[pai];
         this->rodadas[pai] = this->rodadas[maior];
