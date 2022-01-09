@@ -30,7 +30,7 @@ void Heap_URL_Acessos::adicionar(URL_Acessos url_acessos, int rodada)
     erroAssert(rodada >= 0, "A rodada nao pode ser um valor negativo.");
 
     this->rodadas[++this->quantidade] = rodada;
-    escreveMemLog((long int)&this->heap[this->quantidade], sizeof(URL_Acessos));
+    escreveMemLog((long int)&this->heap[this->quantidade], sizeof(URL_Acessos), 0);
     this->heap[this->quantidade] = url_acessos;
 
     for (int i = this->quantidade / 2; i > 0; i /= 2)
@@ -43,7 +43,7 @@ URL_Acessos Heap_URL_Acessos::url_acessos_primeiro()
 // Saida: primeiro elemento do heap.
 {
     erroAssert(!this->vazio(), "Nao eh possivel obter o primeiro elemento de um heap vazio");
-    leMemLog((long int)&this->heap[1], sizeof(URL_Acessos));
+    leMemLog((long int)&this->heap[1], sizeof(URL_Acessos), 0);
     return this->heap[1];
 }
 
@@ -64,7 +64,8 @@ void Heap_URL_Acessos::tira_primeiro()
 {
     erroAssert(!this->vazio(), "Nao eh possivel tirar o primeiro elemento de um heap vazio");
     this->heap[1] = heap[this->quantidade];
-    escreveMemLog((long int)&this->heap[1], sizeof(URL_Acessos));
+    escreveMemLog((long int)&this->heap[1], sizeof(URL_Acessos), 0);
+    leMemLog((long int)&this->heap[this->quantidade], sizeof(URL_Acessos), 0);
     this->rodadas[1] = rodadas[this->quantidade--];
 
     if (this->quantidade == 0)
@@ -101,44 +102,51 @@ void Heap_URL_Acessos::refaz(int l, int tam)
     erroAssert(l >= 1 && l <= tam, "Valores invalidos para o algoritmo de heap.");
     int pai = l;
     URL_Acessos filhoR, filhoL;
+    int maior = 2 * l;
+
     if (2 * l + 1 <= tam)
     {
         filhoL = this->heap[2 * l + 1];
         filhoR = this->heap[2 * l];
-        leMemLog((long int)&this->heap[2 * l + 1], sizeof(URL_Acessos));
-        leMemLog((long int)&this->heap[2 * l], sizeof(URL_Acessos));
+        leMemLog((long int)&this->heap[2 * l + 1], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->heap[2 * l], sizeof(URL_Acessos), 1);
+        if (filhoR < filhoL)
+        {
+            maior = 2 * l + 1;
+        }
     }
     else if (2 * l <= tam)
     {
         filhoR = this->heap[2 * l];
+        leMemLog((long int)&this->heap[2 * l], sizeof(URL_Acessos), 1);
     }
     else
     {
         return;
     }
 
-    int maior = 2 * l + 1;
-
-    if (filhoL < filhoR)
-    {
-        maior = 2 * l;
-    }
-
     if (this->heap[pai] < this->heap[maior])
     {
+        leMemLog((long int)&this->heap[pai], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->heap[maior], sizeof(URL_Acessos), 1);
         // Trocando elementos
         URL_Acessos url_pai = this->heap[pai];
-        leMemLog((long int)&this->heap[pai], sizeof(URL_Acessos));
+        leMemLog((long int)&this->heap[pai], sizeof(URL_Acessos), 0);
         this->heap[pai] = this->heap[maior];
-        leMemLog((long int)&this->heap[maior], sizeof(URL_Acessos));
-        escreveMemLog((long int)&this->heap[pai], sizeof(URL_Acessos));
+        leMemLog((long int)&this->heap[maior], sizeof(URL_Acessos), 0);
+        escreveMemLog((long int)&this->heap[pai], sizeof(URL_Acessos), 0);
         this->heap[maior] = url_pai;
-        escreveMemLog((long int)&this->heap[maior], sizeof(URL_Acessos));
+        escreveMemLog((long int)&this->heap[maior], sizeof(URL_Acessos), 0);
 
         int rodadas_pai = this->rodadas[pai];
         this->rodadas[pai] = this->rodadas[maior];
         this->rodadas[maior] = rodadas_pai;
 
         refaz(maior, tam);
+    }
+    else
+    {
+        leMemLog((long int)&this->heap[pai], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->heap[maior], sizeof(URL_Acessos), 1);
     }
 }

@@ -30,12 +30,12 @@ void Heapsort_Recursivo::ordena()
     {
         // Trocando elementos
         URL_Acessos primeiro = this->lista_urls[1 - 1];
-        leMemLog((long int)&this->lista_urls[1 - 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->lista_urls[1 - 1], sizeof(URL_Acessos), 0);
         this->lista_urls[1 - 1] = this->lista_urls[dir - 1];
-        leMemLog((long int)&this->lista_urls[dir - 1], sizeof(URL_Acessos));
-        escreveMemLog((long int)&this->lista_urls[1 - 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->lista_urls[dir - 1], sizeof(URL_Acessos), 0);
+        escreveMemLog((long int)&this->lista_urls[1 - 1], sizeof(URL_Acessos), 0);
         this->lista_urls[-1 + dir--] = primeiro;
-        escreveMemLog((long int)&this->lista_urls[dir], sizeof(URL_Acessos));
+        escreveMemLog((long int)&this->lista_urls[dir], sizeof(URL_Acessos), 0);
 
         this->refaz(1, dir);
     }
@@ -56,8 +56,8 @@ void Heapsort_Recursivo::refaz(int l, int tam)
     {
         filhoL = this->lista_urls[2 * l + 1 - 1];
         filhoR = this->lista_urls[2 * l - 1];
-        leMemLog((long int)&this->lista_urls[2 * l + 1 - 1], sizeof(URL_Acessos));
-        leMemLog((long int)&this->lista_urls[2 * l - 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->lista_urls[2 * l + 1 - 1], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->lista_urls[2 * l - 1], sizeof(URL_Acessos), 1);
         if (filhoL < filhoR)
         {
             menor = 2 * l + 1;
@@ -74,15 +74,22 @@ void Heapsort_Recursivo::refaz(int l, int tam)
 
     if (this->lista_urls[menor - 1] < this->lista_urls[pai - 1])
     {
+        leMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos), 1);
         // Trocando elementos
         URL_Acessos url_pai = this->lista_urls[pai - 1];
-        leMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos), 0);
         this->lista_urls[pai - 1] = this->lista_urls[menor - 1];
-        leMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos));
-        escreveMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos));
+        leMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos), 0);
+        escreveMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos), 0);
         this->lista_urls[menor - 1] = url_pai;
-        escreveMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos));
+        escreveMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos), 0);
 
         refaz(menor, tam);
+    }
+    else
+    {
+        leMemLog((long int)&this->lista_urls[menor - 1], sizeof(URL_Acessos), 1);
+        leMemLog((long int)&this->lista_urls[pai - 1], sizeof(URL_Acessos), 1);
     }
 }

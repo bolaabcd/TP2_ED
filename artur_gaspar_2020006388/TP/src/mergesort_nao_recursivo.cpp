@@ -58,21 +58,21 @@ void Mergesort_Nao_Recursivo::ordena()
         {
             if (this->lista_urls[i] < this->lista_urls[j])
             {
-                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
-                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
+                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 1);
+                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 1);
                 // Trocando elementos
                 URL_Acessos a = this->lista_urls[i];
-                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
+                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 0);
                 this->lista_urls[i] = this->lista_urls[j];
-                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
-                escreveMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
+                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 0);
+                escreveMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 0);
                 this->lista_urls[j] = a;
-                escreveMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
+                escreveMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 0);
             }
             else
             {
-                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos));
-                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos));
+                leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 1);
+                leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 1);
                 j++;
             }
         }

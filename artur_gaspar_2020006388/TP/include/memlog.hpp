@@ -23,14 +23,15 @@ typedef struct memlog
 	int regmem;
 	int fase;
 	int ativo;
+	int grupo;
 } memlog_tipo;
 
-int iniciaMemLog(std::string nome, int regmem);
+int iniciaMemLog(std::string nome, int regmem, int grupo_registrado);
 int ativaMemLog();
 int desativaMemLog();
 int defineFaseMemLog(int f);
-int leMemLog(long int pos, long int tam);
-int escreveMemLog(long int pos, long int tam);
+int leMemLog(long int pos, long int tam, int grupo);
+int escreveMemLog(long int pos, long int tam, int grupo);
 int finalizaMemLog();
 
 #endif

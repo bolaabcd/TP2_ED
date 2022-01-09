@@ -26,7 +26,7 @@
 // variaveis globais para opcoes
 static int desafio, n_fitas, n_mem_prim;
 std::string reg_nome, in_nome, out_nome;
-int regmem;
+int regmem, comparacoes;
 
 void uso()
 // Descricao: imprime as opcoes de uso
@@ -40,8 +40,9 @@ void uso()
     fprintf(stderr, "\t-n <num>\t(limite de entidades na memoria primaria: maximo por fita)\n");
     fprintf(stderr, "\t-f <num>\t(limite de fitas, preenche cada fita ate ter esse numero de fitas)\n");
     fprintf(stderr, "\t-d      \t[1_merge, 1_heap, 2_quick, 2_merge]\t(desafio a executar)\n");
-    fprintf(stderr, "\t-p      \t<arq>\t(arquivo de registro de desempenho)\n");
+    fprintf(stderr, "\t-p <arq>\t(arquivo de registro de desempenho)\n");
     fprintf(stderr, "\t-l      \t(registrar padrao de acesso e localidade)\n");
+    fprintf(stderr, "\t-c      \t(registrar comparacoes ao inves de acessos)\n");
 }
 
 void parse_args(int argc, char **argv)
@@ -67,6 +68,7 @@ void parse_args(int argc, char **argv)
     n_fitas = -1;
     n_mem_prim = -1;
     regmem = 0;
+    comparacoes = 0;
     reg_nome[0] = 0;
     in_nome[0] = 0;
     out_nome[0] = 0;
@@ -75,7 +77,7 @@ void parse_args(int argc, char **argv)
 
     // getopt - letra indica a opcao, : junto a letra indica parametro
     // no caso de escolher mais de uma operacao, vale a ultima
-    while ((c = getopt(argc, argv, "d:n:f:p:i:o:hl")) != EOF)
+    while ((c = getopt(argc, argv, "d:n:f:p:i:o:hlc")) != EOF)
     {
         switch (c)
         {
@@ -120,6 +122,9 @@ void parse_args(int argc, char **argv)
             i = true;
             in_nome = optarg;
             break;
+        case 'c':
+            comparacoes = 1;
+            break;
         case 'h':
         default:
             uso();
@@ -152,7 +157,7 @@ int main(int argc, char **argv)
     parse_args(argc, argv);
 
     // iniciar registro de acesso
-    iniciaMemLog(reg_nome, regmem);
+    iniciaMemLog(reg_nome, regmem, comparacoes);
 
     // ativar registro de acesso
     ativaMemLog();
@@ -185,11 +190,13 @@ int main(int argc, char **argv)
 
     Rodada_Manipulator manipulator(in_nome, ord, n_fitas, n_mem_prim);
 
-    while (!manipulator.acabou())
-    {
-        manipulator.gera_rodadas();
-        manipulator.intercala_rodadas(out_nome);
-    }
+    
+    manipulator.gera_rodadas();
+    
+    defineFaseMemLog(1);
+    manipulator.intercala_rodadas(out_nome);
+    
+    erroAssert(manipulator.acabou(),"Nao foi possivel ordenar todos URLs com a memoria e limite de fitas permitidos.");
 
     manipulator.destruir();
 

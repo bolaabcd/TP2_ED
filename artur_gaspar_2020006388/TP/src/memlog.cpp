@@ -5,6 +5,7 @@
 // Historico    : 2021-10-18 - arquivo criado
 //              : 2021-10-22 - estrutura de diretorios
 //              : 2021-10-27 - (Artur Gaspar) alterado tipo do iniciaMemLog para string
+//              : 2022-01-09 - (Artur Gaspar) adicionado grupo a ser verificado
 //---------------------------------------------------------------------
 
 #include <stdio.h>
@@ -26,50 +27,53 @@ void clkDifMemLog(struct timespec t1, struct timespec t2, struct timespec *res)
 // Entrada: t1, t2
 // Saida: res
 {
-  if (t2.tv_nsec < t1.tv_nsec)
-  {
-    // ajuste necessario, utilizando um segundo de tv_sec
-    res->tv_nsec = 1000000000 + t2.tv_nsec - t1.tv_nsec;
-    res->tv_sec = t2.tv_sec - t1.tv_sec - 1;
-  }
-  else
-  {
-    // nao e necessario ajuste
-    res->tv_nsec = t2.tv_nsec - t1.tv_nsec;
-    res->tv_sec = t2.tv_sec - t1.tv_sec;
-  }
+    if (t2.tv_nsec < t1.tv_nsec)
+    {
+        // ajuste necessario, utilizando um segundo de tv_sec
+        res->tv_nsec = 1000000000 + t2.tv_nsec - t1.tv_nsec;
+        res->tv_sec = t2.tv_sec - t1.tv_sec - 1;
+    }
+    else
+    {
+        // nao e necessario ajuste
+        res->tv_nsec = t2.tv_nsec - t1.tv_nsec;
+        res->tv_sec = t2.tv_sec - t1.tv_sec;
+    }
 }
 
-int iniciaMemLog(std::string nome, int regmem)
+int iniciaMemLog(std::string nome, int regmem, int grupo_registrado)
 // Descricao: inicializa o registro de acessos, abrindo o arquivo nome
 // Entrada: nome
 // Saida: nao tem
 {
-  // escolhe modo do relogio
-  ml.clk_id = CLOCK_MONOTONIC;
+    // escolhe modo do relogio
+    ml.clk_id = CLOCK_MONOTONIC;
 
-  // escolhe se deve ou nao registrar padrao de acesso a memoria
-  ml.regmem = regmem;
+    // escolhe se deve ou nao registrar padrao de acesso a memoria
+    ml.regmem = regmem;
 
-  // abre arquivo de registro e verifica se foi aberto corretamente
-  ml.log = fopen(nome.c_str(), "wt");
-  erroAssert(ml.log != NULL, "Nao foi posssivel abrir a saida do memlog.");
+    // escolhe o grupo a registrar
+    ml.grupo = grupo_registrado;
 
-  // captura o tempo inicial do registro
-  struct timespec tp;
-  int result = clock_gettime(ml.clk_id, &tp);
-  ml.inittime.tv_sec = tp.tv_sec;
-  ml.inittime.tv_nsec = tp.tv_nsec;
+    // abre arquivo de registro e verifica se foi aberto corretamente
+    ml.log = fopen(nome.c_str(), "wt");
+    erroAssert(ml.log != NULL, "Nao foi posssivel abrir a saida do memlog.");
 
-  // inicializa variaveis do TAD
-  ml.count = 1;
-  ml.ativo = MLATIVO;
-  ml.fase = 0;
+    // captura o tempo inicial do registro
+    struct timespec tp;
+    int result = clock_gettime(ml.clk_id, &tp);
+    ml.inittime.tv_sec = tp.tv_sec;
+    ml.inittime.tv_nsec = tp.tv_nsec;
 
-  // imprime registro inicial
-  int retprint = fprintf(ml.log, "I %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
-  erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
-  return result;
+    // inicializa variaveis do TAD
+    ml.count = 1;
+    ml.ativo = MLATIVO;
+    ml.fase = 0;
+
+    // imprime registro inicial
+    int retprint = fprintf(ml.log, "I %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
+    erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
+    return result;
 }
 
 int ativaMemLog()
@@ -77,8 +81,8 @@ int ativaMemLog()
 // Entrada: nao tem
 // Saida: MLATIVO
 {
-  ml.ativo = MLATIVO;
-  return MLATIVO;
+    ml.ativo = MLATIVO;
+    return MLATIVO;
 }
 
 int desativaMemLog()
@@ -86,8 +90,8 @@ int desativaMemLog()
 // Entrada: nao tem
 // Saida: MLINATIVO
 {
-  ml.ativo = MLINATIVO;
-  return MLINATIVO;
+    ml.ativo = MLINATIVO;
+    return MLINATIVO;
 }
 
 int defineFaseMemLog(int f)
@@ -95,60 +99,68 @@ int defineFaseMemLog(int f)
 // Entrada: f
 // Saida: valor de f
 {
-  ml.fase = f;
-  return f;
+    ml.fase = f;
+    return f;
 }
 
-int leMemLog(long int pos, long int tam)
+int leMemLog(long int pos, long int tam, int grupo)
 // Descricao: registra acesso de leitura de tam bytes na posicao pos
 // Entrada: pos,tam
 // Saida: resultado da obtencao do relogio
 {
-  // verifica se registro esta ativo
-  if (ml.ativo == MLINATIVO || !ml.regmem)
-    return 0;
+    // verifica se registro esta ativo
+    if (ml.ativo == MLINATIVO || !ml.regmem)
+        return 0;
 
-  // captura tempo atual
-  struct timespec tp, tdif;
-  int result = clock_gettime(ml.clk_id, &tp);
+    // verifica se é um registro do grupo apropriado
+    if (ml.grupo != grupo)
+        return 0;
 
-  // calcula a diferencao com tempo inicial, para economia de armazenamento
-  clkDifMemLog(ml.inittime, tp, &tdif);
+    // captura tempo atual
+    struct timespec tp, tdif;
+    int result = clock_gettime(ml.clk_id, &tp);
 
-  // atualiza contador
-  ml.count++;
+    // calcula a diferencao com tempo inicial, para economia de armazenamento
+    clkDifMemLog(ml.inittime, tp, &tdif);
 
-  // imprime registro
-  int retprint = fprintf(ml.log, "L %d %ld %ld.%ld %ld %ld\n",
-                         ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
-  erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
-  return result;
+    // atualiza contador
+    ml.count++;
+
+    // imprime registro
+    int retprint = fprintf(ml.log, "L %d %ld %ld.%ld %ld %ld\n",
+                           ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
+    erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
+    return result;
 }
 
-int escreveMemLog(long int pos, long int tam)
+int escreveMemLog(long int pos, long int tam, int grupo)
 // Descricao: registra acesso de escrita de tam bytes na posicao pos
 // Entrada: pos, tam
 // Saida: resultado da obtencao do relogio
 {
-  // verifica se registro esta ativo
-  if (ml.ativo == MLINATIVO || !ml.regmem)
-    return 0;
+    // verifica se registro esta ativo
+    if (ml.ativo == MLINATIVO || !ml.regmem)
+        return 0;
 
-  // captura tempo atual
-  struct timespec tp, tdif;
-  int result = clock_gettime(ml.clk_id, &tp);
+    // verifica se é um registro do grupo apropriado
+    if (ml.grupo != grupo)
+        return 0;
 
-  // calcula a diferencao com tempo inicial, para economia de armazenamento
-  clkDifMemLog(ml.inittime, tp, &tdif);
+    // captura tempo atual
+    struct timespec tp, tdif;
+    int result = clock_gettime(ml.clk_id, &tp);
 
-  // atualiza contador
-  ml.count++;
+    // calcula a diferencao com tempo inicial, para economia de armazenamento
+    clkDifMemLog(ml.inittime, tp, &tdif);
 
-  // imprime registro
-  int retprint = fprintf(ml.log, "E %d %ld %ld.%ld %ld %ld\n",
-                         ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
-  erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
-  return result;
+    // atualiza contador
+    ml.count++;
+
+    // imprime registro
+    int retprint = fprintf(ml.log, "E %d %ld %ld.%ld %ld %ld\n",
+                           ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
+    erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
+    return result;
 }
 
 int finalizaMemLog()
@@ -156,22 +168,22 @@ int finalizaMemLog()
 // Entrada: nao tem
 // Saida: resultado da obtencao do relogio
 {
-  // captura o tempo atual
-  struct timespec tp;
-  int result = clock_gettime(ml.clk_id, &tp);
+    // captura o tempo atual
+    struct timespec tp;
+    int result = clock_gettime(ml.clk_id, &tp);
 
-  // atualiza contador
-  ml.count++;
+    // atualiza contador
+    ml.count++;
 
-  // imprime registro final
-  int retprint = fprintf(ml.log, "F %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
-  erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
+    // imprime registro final
+    int retprint = fprintf(ml.log, "F %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
+    erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
 
-  // fecha arquivo de registro
-  int retclose = fclose(ml.log);
-  erroAssert(retclose == 0, "Nao foi possivel fechar o arquivo de registro");
+    // fecha arquivo de registro
+    int retclose = fclose(ml.log);
+    erroAssert(retclose == 0, "Nao foi possivel fechar o arquivo de registro");
 
-  // atualiza variavel de estado
-  ml.ativo = MLINATIVO;
-  return result;
+    // atualiza variavel de estado
+    ml.ativo = MLINATIVO;
+    return result;
 }
