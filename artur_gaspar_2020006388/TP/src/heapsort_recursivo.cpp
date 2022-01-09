@@ -41,7 +41,7 @@ void Heapsort_Recursivo::refaz(int l, int tam)
 // Entrada: posicao inicial a refazer e tamanho total do heap.
 // Saida: altera o this->heap e o this->rodadas.
 {
-    erroAssert((l >= 1 && l <= tam), "Valores invalidos para o algoritmo de heap.");
+    erroAssert((l >= 1 && l <= tam), "Valores invalidos para o algoritmo de heapsort.");
 
     int pai = l;
     URL_Acessos filhoR, filhoL;
