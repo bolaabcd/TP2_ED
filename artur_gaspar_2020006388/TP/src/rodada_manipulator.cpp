@@ -51,8 +51,10 @@ void Rodada_Manipulator::gera_rodadas()
         arq_saida.open("rodada-" + std::to_string(k + 1) + ".txt");
         erroAssert(!arq_saida.fail(), "Erro ao abrir arquivo de rodada para escrita.");
 
-        if (!leu_algo)
+        if (!leu_algo){
+            this->num_rodadas = k;
             break;
+        }
         this->ord->set_fonte(url_acessos, i);
         this->ord->ordena();
 
@@ -81,6 +83,8 @@ bool Rodada_Manipulator::acabou()
 // Entrada: nao tem.
 // Saida: verdadeiro se o arquivo de entrada acabou, falso caso contrario.
 {
+    URL_Acessos tmp;
+    this->arq_entrada >> tmp;
     return this->arq_entrada.eof();
 }
 
