@@ -6,6 +6,7 @@
 //              : 2021-10-22 - estrutura de diretorios
 //              : 2021-10-27 - (Artur Gaspar) alterado tipo do iniciaMemLog para string
 //              : 2022-01-09 - (Artur Gaspar) adicionado grupo a ser verificado
+//              : 2022-01-10 - (ARtur Gaspar) arrumada impressao dos nanosegundos
 //---------------------------------------------------------------------
 
 #include <stdio.h>
@@ -71,7 +72,7 @@ int iniciaMemLog(std::string nome, int regmem, int grupo_registrado)
     ml.fase = 0;
 
     // imprime registro inicial
-    int retprint = fprintf(ml.log, "I %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
+    int retprint = fprintf(ml.log, "I %ld %ld.%09ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
     erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
     return result;
 }
@@ -127,7 +128,7 @@ int leMemLog(long int pos, long int tam, int grupo)
     ml.count++;
 
     // imprime registro
-    int retprint = fprintf(ml.log, "L %d %ld %ld.%ld %ld %ld\n",
+    int retprint = fprintf(ml.log, "L %d %ld %ld.%09ld %ld %ld\n",
                            ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
     erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
     return result;
@@ -157,7 +158,7 @@ int escreveMemLog(long int pos, long int tam, int grupo)
     ml.count++;
 
     // imprime registro
-    int retprint = fprintf(ml.log, "E %d %ld %ld.%ld %ld %ld\n",
+    int retprint = fprintf(ml.log, "E %d %ld %ld.%09ld %ld %ld\n",
                            ml.fase, ml.count, tdif.tv_sec, tdif.tv_nsec, pos, tam);
     erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
     return result;
@@ -176,7 +177,7 @@ int finalizaMemLog()
     ml.count++;
 
     // imprime registro final
-    int retprint = fprintf(ml.log, "F %ld %ld.%ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
+    int retprint = fprintf(ml.log, "F %ld %ld.%09ld\n", ml.count, tp.tv_sec, tp.tv_nsec);
     erroAssert(retprint >= 0, "Nao foi possivel escrever registro");
 
     // fecha arquivo de registro
