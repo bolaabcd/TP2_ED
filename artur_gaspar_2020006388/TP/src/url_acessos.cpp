@@ -21,7 +21,7 @@ bool URL_Acessos::operator<(URL_Acessos outro)
 // argumento no ordenamento desejado.
 {
     if (this->quantidade == outro.quantidade)
-        return this->url < outro.url;
+        return outro.url < this->url;
     else
         return this->quantidade < outro.quantidade;
 }
