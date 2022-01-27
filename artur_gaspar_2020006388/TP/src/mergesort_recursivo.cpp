@@ -36,26 +36,31 @@ void Mergesort_Recursivo::mergesort_interno(int l, int r)
     mergesort_interno(l, meio);
     mergesort_interno(meio + 1, r);
 
-    for (int i = l, j = meio + 1; i <= meio && j < this->numero_urls; i++)
+    URL_Acessos *lista_tmp = new URL_Acessos[this->numero_urls];
+    int k = 0;
+    for (int i = l, j = meio + 1; k < this->numero_urls; k++)
     {
-        if (this->lista_urls[i] < this->lista_urls[j])
+        if(k < l || k > r){
+            lista_tmp[k] = this->lista_urls[k];
+        } else if (j <= r && (i > meio || this->lista_urls[i] < this->lista_urls[j]))
         {
             leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 1);
             leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 1);
-            // Trocando elementos
-            URL_Acessos a = this->lista_urls[i];
-            leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 0);
-            this->lista_urls[i] = this->lista_urls[j];
-            leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 0);
-            escreveMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 0);
-            this->lista_urls[j] = a;
-            escreveMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 0);
+            lista_tmp[k] = this->lista_urls[j];
+            j++;
         }
         else
         {
             leMemLog((long int)&this->lista_urls[i], sizeof(URL_Acessos), 1);
             leMemLog((long int)&this->lista_urls[j], sizeof(URL_Acessos), 1);
-            j++;
+            lista_tmp[k] = this->lista_urls[i];
+            i++;
         }
     }
+
+    for(k = 0; k < this->numero_urls; k++){
+        this->lista_urls[k] = lista_tmp[k];
+    }
+    
+    delete[] lista_tmp;
 }
