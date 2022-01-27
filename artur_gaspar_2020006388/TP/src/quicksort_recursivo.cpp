@@ -34,9 +34,21 @@ void Quicksort_Recursivo::quicksort_interno(int l, int r)
     erroAssert(l < r, "Intervalo invalido no quicksort recursivo.");
 
     int meio = (l + r) / 2;
+    int pivo = meio;
+    if(this->lista_urls[l] < this->lista_urls[r]){
+        if(this->lista_urls[meio] < this->lista_urls[l])
+            pivo = l;
+        else if (this->lista_urls[r] < this->lista_urls[meio])
+            pivo = r;
+    } else {
+        if(this->lista_urls[meio] < this->lista_urls[r])
+            pivo = r;
+        else if (this->lista_urls[l] < this->lista_urls[meio])
+            pivo = l;
+    }
 
-    URL_Acessos aux = this->lista_urls[meio];
-    leMemLog((long int)&this->lista_urls[meio], sizeof(URL_Acessos), 0);
+    URL_Acessos aux = this->lista_urls[pivo];
+    leMemLog((long int)&this->lista_urls[pivo], sizeof(URL_Acessos), 0);
     int i, j;
     for (i = l, j = r;;)
     {
